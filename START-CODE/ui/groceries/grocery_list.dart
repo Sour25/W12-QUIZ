@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'grocery_form.dart';
 import '../../data/mock_grocery_repository.dart';
 import '../../models/grocery.dart';
 
@@ -37,19 +37,19 @@ class _GroceryListState extends State<GroceryList> {
   Widget build(BuildContext context) {
     Widget content = const Center(child: Text('No items added yet.'));
 
-    if (dummyGroceryItems.isNotEmpty) {
+    if (_groceries.isNotEmpty) {
       //  Display groceries with an Item builder and  LIst Tile
       content = ListView.builder(
-        itemCount: dummyGroceryItems.length,
+        itemCount: _groceries.length,
         itemBuilder: (context, index) =>
-            GroceryItem(grocery: dummyGroceryItems[index]),
+            GroceryItem(grocery: _groceries[index]),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Groceries'),
-        actions: [IconButton(onPressed: () => {}, icon: const Icon(Icons.add))],
+        actions: [IconButton(onPressed: onCreate, icon: const Icon(Icons.add))],
       ),
       body: content,
     );

@@ -33,7 +33,14 @@ class _NewItemState extends State<NewItem> {
     super.dispose();
   }
 
-  void onReset() {}
+  void onReset() {
+    _formKey.currentState!.reset();
+    setState(() {
+      _nameController.text = defaultName;
+      _quantityController.text = defaultQuantity.toString();
+      _selectedCategory = defaultCategory;
+    });
+  }
 
   void onAdd() {
     if (!_formKey.currentState!.validate()) {

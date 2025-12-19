@@ -12,7 +12,6 @@ class NewItem extends StatefulWidget {
 }
 
 class _NewItemState extends State<NewItem> {
-
   // Default settings
   static const defautName = "New grocery";
   static const defaultQuantity = 1;
@@ -57,11 +56,22 @@ class _NewItemState extends State<NewItem> {
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            TextField(
-              controller: _nameController,
-              maxLength: 50,
-              decoration: const InputDecoration(label: Text('Name')),
+            TextFormField(
+              controller: _quantityController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Quantity'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Quantity is required';
+                }
+                final number = int.tryParse(value);
+                if (number == null || number <= 0) {
+                  return 'Enter a valid number';
+                }
+                return null;
+              },
             ),
+
             const SizedBox(height: 10),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -76,7 +86,7 @@ class _NewItemState extends State<NewItem> {
                 Expanded(
                   child: DropdownButtonFormField<GroceryCategory>(
                     initialValue: _selectedCategory,
-                    items: [  ],
+                    items: [],
                     onChanged: (value) {
                       if (value != null) {
                         setState(() {
@@ -93,10 +103,7 @@ class _NewItemState extends State<NewItem> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(onPressed: onReset, child: const Text('Reset')),
-                ElevatedButton(
-                  onPressed: onAdd,
-                  child: const Text('Add Item'),
-                ),
+                ElevatedButton(onPressed: onAdd, child: const Text('Add Item')),
               ],
             ),
           ],
